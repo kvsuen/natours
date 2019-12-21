@@ -49,7 +49,7 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
 }
 
-/* reference point is the parent element which has its position set to relative */
+/* reference point is the first parent element which has its position set to relative */
 .logo-box {
   position: absolute;
   top: 40px;
@@ -63,8 +63,9 @@ body {
 .text-box {
   position: absolute;
   top: 40%;
-  left: 52%;
-  transform: translate(-50%, -50%)
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
 .header-primary {
@@ -73,6 +74,7 @@ body {
 
   /* fixes animation shakiness occurence */
   backface-visibility: hidden;
+  margin-bottom: 60px;
 }
 
 .header-primary-main {
@@ -128,4 +130,75 @@ can use keyframes or set transition */
     opacity: 1;
     transform: translate(0);
   }
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+/* link "psuedo class" */
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  /* since it is inline block element,
+  it is treated as if it is text,
+  then we can just set textbox text align to center */
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+}
+
+/* basically treated as a child of the element,
+height and width takes size of parent */
+.btn::after {
+  /* always need content and display for after/before */
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .4s;
+}
+
+.btn-white::after {
+  background-color: #fff;
+}
+
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn-animated {
+  animation: moveInBottom .5s ease-out .75s;
+  animation-fill-mode: backwards;
 }
